@@ -1,416 +1,153 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>For Sanika ❤️</title>
-  <style>
-    body, html {
-      margin: 0; padding: 0; height: 100%;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #ff758c, #ff7eb3);
-      color: white;
-      overflow-x: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      flex-direction: column;
-      padding: 30px 20px;
-      user-select: none;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Sanika ❤️</title>
+<style>
+body, html {
+  margin: 0; padding: 0; height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  color: white;
+  display: flex; justify-content: center; align-items: center;
+  text-align: center; padding: 20px; overflow-x: hidden;
+}
 
-    .hearts {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      overflow: visible;
-      z-index: 0;
-    }
-    .heart {
-      position: absolute;
-      width: 15px;
-      height: 15px;
-      background: #ff4d6d;
-      transform: rotate(45deg);
-      animation: floatUp linear infinite;
-      opacity: 0.8;
-      border-radius: 4px 4px 0 0;
-      box-shadow: inset -2px -2px 0 #ff7285;
-    }
-    .heart:before,
-    .heart:after {
-      content: "";
-      position: absolute;
-      width: 15px;
-      height: 15px;
-      background: #ff4d6d;
-      border-radius: 50%;
-    }
-    .heart:before {
-      top: -7.5px;
-      left: 0;
-    }
-    .heart:after {
-      left: 7.5px;
-      top: 0;
-    }
-    @keyframes floatUp {
-      0% {
-        transform: translateY(0) rotate(45deg);
-        opacity: 0.8;
-      }
-      100% {
-        transform: translateY(-120vh) rotate(45deg);
-        opacity: 0;
-      }
-    }
+/* Floating hearts */
+.hearts { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; }
+.heart { position: absolute; width: 15px; height: 15px; background: #ff4d6d; transform: rotate(45deg); border-radius: 4px 4px 0 0; animation: floatUp linear infinite; }
+.heart:before, .heart:after { content: ""; position: absolute; width: 15px; height: 15px; background: #ff4d6d; border-radius: 50%; }
+.heart:before { top: -7.5px; left: 0; }
+.heart:after { left: 7.5px; top: 0; }
+@keyframes floatUp { 0%{transform:translateY(0) rotate(45deg); opacity:0.8;}100%{transform:translateY(-120vh) rotate(45deg); opacity:0;} }
 
-    .container {
-      position: relative;
-      max-width: 420px;
-      z-index: 10;
-      background: rgba(255 255 255 / 0.12);
-      border-radius: 20px;
-      padding: 30px 25px;
-      box-shadow: 0 0 20px #ff4d6daa;
-      backdrop-filter: blur(10px);
-      animation: fadeInUp 1.2s ease forwards;
-      opacity: 0;
-      min-height: 420px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+.container {
+  z-index: 10; background: rgba(255,255,255,0.15);
+  padding: 25px 20px; border-radius: 20px;
+  backdrop-filter: blur(10px); width:100%; max-width:400px;
+}
 
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-    }
+h1 { font-size: 2.4rem; margin-bottom: 0.2em; }
+p { font-size: 1.1rem; margin: 1em 0; word-wrap: break-word; }
 
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.15em;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 12px;
-      animation: fadeInText 1.5s ease forwards;
-      opacity: 0;
-    }
+.buttons { display: flex; justify-content: center; gap: 15px; margin-top: 15px; }
+button {
+  padding: 12px 30px; font-size: 1.1rem;
+  border: none; border-radius: 25px; cursor: pointer;
+  transition: transform 0.3s ease;
+}
+#yesBtn { background: white; color: #ff4d6d; }
+#noBtn { background: #ff4d6d; color: white; }
 
-    .butterfly-icon {
-      font-size: 1.8rem;
-      animation: flutter 3s ease-in-out infinite;
-      user-select: none;
-    }
-    @keyframes flutter {
-      0%, 100% { transform: rotate(0deg) translateY(0); }
-      50% { transform: rotate(15deg) translateY(-6px); }
-    }
+button:hover { transform: scale(1.05); }
 
-    p {
-      font-size: 1.15rem;
-      line-height: 1.6;
-      margin: 1.2em 0 1.6em;
-      animation: fadeInText 1.8s ease forwards;
-      opacity: 0;
-      min-height: 2.3em;
-    }
+#message { font-style: italic; color: #ffe0f0; min-height: 2.5em; margin-top: 10px; }
+#finalMessage { font-size: 1.3rem; font-weight: 600; opacity: 0; margin-top: 15px; }
 
-    strong {
-      color: #fff1f3;
-    }
+img {
+  max-width: 90%; border-radius: 15px; margin-top: 12px;
+  box-shadow: 0 0 15px #ff4d6daa;
+  display: none;
+}
 
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      animation: fadeInText 2s ease forwards;
-      opacity: 0;
-    }
-
-    button {
-      padding: 14px 38px;
-      font-size: 1.15rem;
-      font-weight: 600;
-      border-radius: 30px;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 0 12px transparent;
-      transition: all 0.3s ease;
-      user-select: none;
-      outline-offset: 3px;
-    }
-    button:focus {
-      outline: 2px solid #fff3f6;
-    }
-
-    #yesBtn {
-      background: white;
-      color: #ff4d6d;
-      box-shadow: 0 0 15px #ff4d6d;
-      animation: glow 2.5s ease-in-out infinite;
-    }
-    #yesBtn:hover {
-      box-shadow: 0 0 25px #ff607d, 0 0 40px #ff607d;
-      transform: scale(1.05);
-    }
-
-    #noBtn {
-      background: #ff4d6d;
-      color: white;
-    }
-    #noBtn:hover {
-      background: #ff607d;
-      transform: scale(1.05);
-    }
-
-    @keyframes glow {
-      0%, 100% { box-shadow: 0 0 15px #ff4d6d; }
-      50% { box-shadow: 0 0 30px #ff6b82; }
-    }
-
-    #message {
-      margin-top: 15px;
-      font-size: 1.1rem;
-      font-style: italic;
-      color: #ffdde1;
-      min-height: 3em;
-      animation: fadeInText 2.3s ease forwards;
-      opacity: 0;
-      max-width: 350px;
-    }
-
-    #finalMessage {
-      margin-top: 30px;
-      font-size: 1.3rem;
-      font-weight: 600;
-      line-height: 1.5;
-      color: #ffd6dd;
-      animation: fadeInText 2.5s ease forwards;
-      opacity: 0;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    @keyframes fadeInText {
-      to {
-        opacity: 1;
-      }
-      from {
-        opacity: 0;
-      }
-    }
-
-    .confetti-container {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      pointer-events: none;
-      overflow: visible;
-      z-index: 1000;
-    }
-
-    .confetti {
-      position: absolute;
-      width: 8px;
-      height: 12px;
-      background-color: #ff4d6d;
-      opacity: 0.8;
-      transform-origin: center;
-      animation: confetti-fall linear forwards;
-      border-radius: 2px;
-      box-shadow: 0 0 5px #ff7a91;
-    }
-
-    @keyframes confetti-fall {
-      0% {
-        opacity: 0.8;
-        transform: translateY(0) rotate(0deg);
-      }
-      100% {
-        opacity: 0;
-        transform: translateY(100vh) rotate(360deg);
-      }
-    }
-
-    /* Image styles */
-    #noImage, #yesImage {
-      max-width: 100%;
-      max-height: 200px;
-      border-radius: 15px;
-      margin-top: 12px;
-      box-shadow: 0 0 15px #ff4d6daa;
-      user-select: none;
-      display: none;
-      object-fit: cover;
-    }
-  </style>
+@media (max-width: 400px) {
+  h1 { font-size: 2rem; }
+  button { padding: 10px 20px; font-size: 1rem; }
+}
+</style>
 </head>
 <body>
-  <div class="hearts" aria-hidden="true"></div>
 
-  <div class="container" role="main" aria-label="Valentine message for Sanika">
-    <h1>
-      Hey Sanika <span class="butterfly-icon" aria-label="butterfly emoji">🦋</span>
-    </h1>
+<div class="hearts"></div>
 
-    <p id="introText">
-      I made this little surprise just for you.<br />
-      You brighten my world in ways words can’t capture.
-    </p>
+<div class="container">
+  <h1>Hey Sanika 🦋</h1>
+  <p>I made this little surprise just for you.<br>It comes from my heart.</p>
+  <p><strong>Will you be my Valentine?</strong> 💘</p>
 
-    <p><strong>Will you be my Valentine?</strong> 💘</p>
-
-    <div class="buttons" id="buttonsContainer">
-      <button id="yesBtn" aria-label="Say yes to be my Valentine" type="button">YES ❤️</button>
-      <button id="noBtn" aria-label="Say no to be my Valentine" type="button">NO 😢</button>
-    </div>
-
-    <p id="message" aria-live="polite" role="alert" class="hidden"></p>
-
-    <img id="noImage" alt="Cute couple looking shy or playful" />
-    <img id="yesImage" alt="Couple hug image" />
-
-    <p id="finalMessage" class="hidden" tabindex="0">
-      YAYYY 💖<br /><br />
-      Sanika, you just made me the happiest person.<br />
-      Thank you for choosing me.<br /><br />
-      Forever grateful for you, my butterfly 🦋❤️
-    </p>
+  <div class="buttons" id="buttonsContainer">
+    <button id="yesBtn">YES ❤️</button>
+    <button id="noBtn">NO 😢</button>
   </div>
 
-  <div class="confetti-container" aria-hidden="true"></div>
+  <p id="message"></p>
 
-  <script>
-    // Floating hearts background
-    const heartsContainer = document.querySelector(".hearts");
+  <img id="noImage" alt="Playful couple" />
+  <img id="yesImage" alt="Romantic hug" />
 
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.classList.add("heart");
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = 5 + Math.random() * 5 + "s";
-      heart.style.width = 12 + Math.random() * 12 + "px";
-      heart.style.height = heart.style.width;
-      heartsContainer.appendChild(heart);
-      setTimeout(() => heart.remove(), 10000);
-    }
+  <p id="finalMessage"></p>
+</div>
 
-    setInterval(createHeart, 350);
+<script>
+// Hearts animation
+const heartsC = document.querySelector(".hearts");
+function createHeart(){
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.style.left = Math.random()*100+"vw";
+  heart.style.animationDuration = 4 + Math.random()*4 + "s";
+  heartsC.appendChild(heart);
+  setTimeout(()=>heart.remove(),10000);
+}
+setInterval(createHeart,350);
 
-    // Elements
-    const noBtn = document.getElementById("noBtn");
-    const yesBtn = document.getElementById("yesBtn");
-    const message = document.getElementById("message");
-    const finalMessage = document.getElementById("finalMessage");
-    const buttonsContainer = document.getElementById("buttonsContainer");
-    const noImage = document.getElementById("noImage");
-    const yesImage = document.getElementById("yesImage");
-    const introText = document.getElementById("introText");
-    const confettiContainer = document.querySelector(".confetti-container");
+// Messages
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const msg = document.getElementById("message");
+const noImg = document.getElementById("noImage");
+const yesImg = document.getElementById("yesImage");
+const finalMsg = document.getElementById("finalMessage");
+const buttons = document.getElementById("buttonsContainer");
 
-    // NO messages (cycle through)
-    const noMessages = [
-      "Nice try 😌 you’re not escaping that easily.",
-      "I see you, trying to run away! 🏃‍♀️💨",
-      "Come on, Sanika, don’t be shy!",
-      "You can't say no to my butterfly 🦋!",
-      "Running away won’t save you!",
-      "No? I think that means YES inside!",
-      "You’re stuck with me, forever.",
-      "Try again, my love! ❤️",
-    ];
+const noMessages = [
+  "Nice try 😌 you’re not escaping that easily.",
+  "I see you trying to run away 🏃‍♀️💨!",
+  "Come on, don’t be shy 😘.",
+  "No means YES deep inside 💕.",
+  "You can’t say no to my heart 💗!"
+];
 
-    let noClickCount = 0;
-    let noSize = 1;
-    let buttonsSwapped = false;
+let noCount = 0, swap = false;
 
-    function swapButtons() {
-      // Swap button order inside container
-      if (buttonsSwapped) {
-        buttonsContainer.appendChild(yesBtn);
-        buttonsContainer.appendChild(noBtn);
-      } else {
-        buttonsContainer.appendChild(noBtn);
-        buttonsContainer.appendChild(yesBtn);
-      }
-      buttonsSwapped = !buttonsSwapped;
-    }
+function swapBtns(){
+  if(swap){
+    buttons.appendChild(yesBtn);
+    buttons.appendChild(noBtn);
+  } else {
+    buttons.appendChild(noBtn);
+    buttons.appendChild(yesBtn);
+  }
+  swap = !swap;
+}
 
-    function noClicked() {
-      // Shrink NO button a bit (min size 0.4)
-      noSize = Math.max(0.4, noSize - 0.15);
-      noBtn.style.transform = `scale(${noSize})`;
+noBtn.onclick = () => {
+  msg.textContent = noMessages[noCount % noMessages.length];
+  noCount++;
+  noImg.style.display = "block";
+  yesImg.style.display = "none";
+  noImg.src = "https://pngimg.com/uploads/couple_hugging/couple_hugging_PNG54.png"; 
+  swapBtns();
+}
 
-      // Show next message from list
-      message.textContent = noMessages[noClickCount % noMessages.length];
-      message.classList.remove("hidden");
-      message.style.opacity = "1";
+yesBtn.onclick = () => {
+  buttons.style.display = "none";
+  msg.style.display = "none";
+  noImg.style.display = "none";
+  yesImg.style.display = "block";
 
-      // Swap buttons positions
-      swapButtons();
+  const hugs = [
+    "https://pngimg.com/uploads/couple_hugging/couple_hugging_PNG45.png",
+    "https://pikwizard.com/pw/medium/4b50457575e07a9aa7c83ec89e4ea9d7.png",
+    "https://pikwizard.com/pw/medium/cee7353216def3de6877740c3f0fb69a.png"
+  ];
+  yesImg.src = hugs[Math.floor(Math.random()*hugs.length)];
 
-      // Show NO image
-      yesImage.style.display = "none";
-      noImage.style.display = "block";
-      noImage.src = "https://i.ibb.co/GF9cY5Z/cute-couple-no.png"; // Cute shy couple image
+  finalMsg.textContent = "YAY ❤️ Sanika, you just made me the happiest person. Forever grateful for you 🦋";
+  finalMsg.style.opacity = "1";
+}
+</script>
 
-      noClickCount++;
-    }
-
-    function yesClicked() {
-      // Hide buttons and message
-      buttonsContainer.style.display = "none";
-      message.style.display = "none";
-      noImage.style.display = "none";
-
-      // Show YES image (couple hug)
-      yesImage.style.display = "block";
-      const hugs = [
-        "https://i.ibb.co/7SJ3dMw/couple-hug1.jpg",
-        "https://i.ibb.co/8bsMdjy/couple-hug2.jpg",
-        "https://i.ibb.co/DWfYXW9/couple-hug3.jpg"
-      ];
-      const randomHug = hugs[Math.floor(Math.random() * hugs.length)];
-      yesImage.src = randomHug;
-
-      // Show final message
-      finalMessage.classList.remove("hidden");
-      finalMessage.focus();
-
-      launchConfetti();
-    }
-
-    // Confetti burst
-    function launchConfetti() {
-      const confettiCount = 30;
-      for (let i = 0; i < confettiCount; i++) {
-        const confetti = document.createElement("div");
-        confetti.classList.add("confetti");
-        confetti.style.left = 50 + Math.random() * 60 - 30 + "vw";
-        confetti.style.top = -10 + "vh";
-        confetti.style.backgroundColor = `hsl(${Math.random() * 60 + 340}, 90%, 70%)`;
-        confetti.style.animationDuration = 2 + Math.random() * 1.5 + "s";
-        confetti.style.animationDelay = (i * 100) / confettiCount + "ms";
-        confettiContainer.appendChild(confetti);
-        setTimeout(() => confetti.remove(), 3500);
-      }
-    }
-
-    noBtn.addEventListener("click", noClicked);
-    yesBtn.addEventListener("click", yesClicked);
-  </script>
 </body>
 </html>
