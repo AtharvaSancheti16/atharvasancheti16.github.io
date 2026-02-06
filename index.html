@@ -14,8 +14,8 @@ body, html {
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 20px;
   overflow-x: hidden;
+  padding: 20px;
 }
 
 .container {
@@ -48,7 +48,6 @@ button {
 
 #yesBtn { background: white; color: #ff4d6d; }
 #noBtn { background: #ff4d6d; color: white; }
-
 button:hover { transform: scale(1.05); }
 
 #message, #finalMessage {
@@ -76,7 +75,7 @@ img {
 <body>
 <div class="container">
   <h1>Hey Sanika 🦋</h1>
-  <p>I made this little surprise just for you.<br>It comes from my heart.</p>
+  <p>I made this little surprise just for you.<br>It comes straight from my heart.</p>
   <p><strong>Will you be my Valentine?</strong> 💘</p>
 
   <div class="buttons" id="buttonsContainer">
@@ -85,31 +84,34 @@ img {
   </div>
 
   <p id="message"></p>
-  <img id="noImage" alt="Playful cute couple" />
+  <img id="noImage" alt="Playful couple" />
   <img id="yesImage" alt="Romantic couple hug" />
   <p id="finalMessage"></p>
 </div>
 
 <script>
-// Messages & images
+// Playful NO messages
 const noMessages = [
   "Nice try 😌 you’re not escaping that easily.",
   "I see you trying to run away 🏃‍♀️💨!",
   "Come on, don’t be shy 😘.",
-  "No means YES deep inside 💕.",
+  "No means YES deep inside 💕!",
   "You can’t say no to my heart 💗!"
 ];
 
+// Using reliable online images
 const noImages = [
-  "https://clipartmax.com/png/middle/387-3870515_clip-art-hot-couple-hugging-transparent-clip-art-hot-couple-hugging-transparent.png" /*NO image*/
+  "https://pikwizard.com/pw/medium/0a6c02c1bd358f7a042da95989d09219.png" /* Playful hug graphic */ 
 ];
 
 const yesImages = [
-  "https://www.pngkit.com/png/detail/90-902390_love-couple-drawing-romance-hug-romantic-cartoon-couple.png",
-  "https://www.nicepng.com/png/detail/8-83806_couple-png-image-romantic-love-kiss-hug.png"
+  "https://pikwizard.com/pw/medium/4b50457575e07a9aa7c83ec89e4ea9d7.png", /* Romantic couple hugging and smiling */ 
+  "https://pikwizard.com/pw/medium/cee7353216def3de6877740c3f0fb69a.png", /* Joyful hug */
+  "https://cdn.pixabay.com/photo/2021/11/24/22/37/couple-hugging-romantic-love-6817020_1280.jpg" /* Romantic real photo */ 
 ];
 
-let noCount = 0, swapped = false;
+let noCount = 0;
+let swapped = false;
 
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
@@ -119,6 +121,7 @@ const yesImg = document.getElementById("yesImage");
 const finalMsg = document.getElementById("finalMessage");
 const buttons = document.getElementById("buttonsContainer");
 
+// Swap buttons function
 function swapBtns() {
   if (swapped) {
     buttons.appendChild(yesBtn);
@@ -130,17 +133,17 @@ function swapBtns() {
   swapped = !swapped;
 }
 
-// NO click
+// NO click behavior
 noBtn.onclick = () => {
   msg.textContent = noMessages[noCount % noMessages.length];
+  noImg.src = noImages[noCount % noImages.length];
   noImg.style.display = "block";
   yesImg.style.display = "none";
-  noImg.src = noImages[0];
   swapBtns();
   noCount++;
 }
 
-// YES click
+// YES click behavior
 yesBtn.onclick = () => {
   buttons.style.display = "none";
   msg.style.display = "none";
@@ -153,5 +156,6 @@ yesBtn.onclick = () => {
   finalMsg.textContent = "YAY ❤️ Sanika, you just made me the happiest person. Forever grateful for you 🦋";
 }
 </script>
+
 </body>
 </html>
