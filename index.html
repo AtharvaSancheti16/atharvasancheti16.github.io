@@ -4,122 +4,62 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Sanika ❤️</title>
-
 <style>
 body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
+  margin: 0; padding: 0; height: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  overflow-x: hidden;
-  color: white;
   padding: 20px;
+  overflow-x: hidden;
 }
 
-.hearts {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 0;
-  overflow: visible;
-}
-
-.heart {
-  position: absolute;
-  width: 15px;
-  height: 15px;
-  background: #ff4d6d;
-  transform: rotate(45deg);
-  border-radius: 4px 4px 0 0;
-  animation: floatUp linear infinite;
-}
-.heart:before,
-.heart:after {
-  content: "";
-  position: absolute;
-  width: 15px;
-  height: 15px;
-  background: #ff4d6d;
-  border-radius: 50%;
-}
-.heart:before { top: -7.5px; left: 0; }
-.heart:after  { left: 7.5px; top: 0; }
-
-@keyframes floatUp {
-  0% { opacity: 0.8; transform: translateY(0) rotate(45deg); }
-  100% { opacity: 0; transform: translateY(-120vh) rotate(45deg); }
-}
-
+/* Container */
 .container {
-  z-index: 10;
   background: rgba(255,255,255,0.15);
+  padding: 25px;
   border-radius: 20px;
   backdrop-filter: blur(10px);
-  padding: 25px;
-  max-width: 400px;
   width: 100%;
+  max-width: 400px;
+  z-index: 10;
 }
 
 h1 { font-size: 2.4rem; }
-p { font-size: 1.1rem; margin: 12px 0; }
-
-.buttons {
-  margin-top: 15px;
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-}
+p { margin: 12px 0; font-size: 1.1rem; }
+.buttons { display: flex; justify-content: center; gap: 15px; margin-top: 15px; }
 
 button {
   padding: 12px 30px;
-  font-size: 1.1rem;
   border: none;
   border-radius: 25px;
   cursor: pointer;
+  font-size: 1.1rem;
   transition: transform 0.3s;
 }
 
 #yesBtn { background: white; color: #ff4d6d; }
-#noBtn  { background: #ff4d6d; color: white; }
-
+#noBtn { background: #ff4d6d; color: white; }
 button:hover { transform: scale(1.05); }
 
-#message, #finalMessage {
-  min-height: 2.5em;
-  color: #ffe0f0;
-  font-style: italic;
-  margin-top: 10px;
-}
+#message, #finalMessage { min-height: 2.5em; margin-top: 10px; color: #ffe0f0; font-style: italic; }
+img { max-width: 90%; margin-top: 12px; border-radius: 15px; box-shadow: 0 0 15px #ff4d6daa; display: none; }
 
-img {
-  max-width: 90%;
-  margin-top: 12px;
-  border-radius: 15px;
-  box-shadow: 0 0 15px #ff4d6daa;
-  display: none;
-}
-
-@media (max-width: 400px){
-  button { padding: 10px 20px; font-size: 1rem; }
+@media (max-width: 400px) {
   h1 { font-size: 2rem; }
+  button { padding: 10px 20px; font-size: 1rem; }
 }
 </style>
 </head>
-
 <body>
-<div class="hearts"></div>
 
 <div class="container">
   <h1>Hey Sanika 🦋</h1>
-  <p>I made this little surprise just for you.<br>You brighten my world in ways words can’t capture.</p>
+  <p>I made this little surprise just for you.<br>It comes straight from my heart.</p>
   <p><strong>Will you be my Valentine?</strong> 💘</p>
 
   <div class="buttons" id="buttonsContainer">
@@ -128,33 +68,13 @@ img {
   </div>
 
   <p id="message"></p>
-  <img id="noImage" alt="Playful couple hug" />
-  <img id="yesImage" alt="Romantic couple hug" />
+  <img id="noImage" alt="Playful couple" />
+  <img id="yesImage" alt="Romantic hug" />
   <p id="finalMessage"></p>
 </div>
 
 <script>
-// Floating hearts
-const heartsC = document.querySelector(".hearts");
-function createHeart() {
-  const heart = document.createElement("div");
-  heart.classList.add("heart");
-  heart.style.left = Math.random()*100 + "vw";
-  heart.style.animationDuration = 4 + Math.random()*4 + "s";
-  heartsC.appendChild(heart);
-  setTimeout(() => heart.remove(), 10000);
-}
-setInterval(createHeart, 350);
-
-// Setup
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
-const msg = document.getElementById("message");
-const noImg = document.getElementById("noImage");
-const yesImg = document.getElementById("yesImage");
-const finalMsg = document.getElementById("finalMessage");
-const buttons = document.getElementById("buttonsContainer");
-
+// Messages and images
 const noMessages = [
   "Nice try 😌 you’re not escaping that easily.",
   "I see you trying to run away 🏃‍♀️💨!",
@@ -163,10 +83,34 @@ const noMessages = [
   "You can’t say no to my heart 💗!"
 ];
 
-let noCount = 0, swapped = false;
+// Reliable NO images (playful/funny)
+const noImages = [
+  "https://i.ibb.co/N6NmNfM/playful1.png",
+  "https://i.ibb.co/6v9bGcd/playful2.png",
+  "https://i.ibb.co/6HRtjQZ/playful3.png"
+];
 
+// Reliable YES hug images (romantic)
+const yesImages = [
+  "https://i.ibb.co/J7k0XcK/romantic1.png",
+  "https://i.ibb.co/TBGrs6d/romantic2.png",
+  "https://i.ibb.co/0QW4b0V/romantic3.png"
+];
+
+let noCount = 0;
+let swapped = false;
+
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const msg = document.getElementById("message");
+const noImg = document.getElementById("noImage");
+const yesImg = document.getElementById("yesImage");
+const finalMsg = document.getElementById("finalMessage");
+const buttons = document.getElementById("buttonsContainer");
+
+// Swap buttons positions
 function swapBtns() {
-  if (swapped) {
+  if(swapped) {
     buttons.appendChild(yesBtn);
     buttons.appendChild(noBtn);
   } else {
@@ -176,30 +120,29 @@ function swapBtns() {
   swapped = !swapped;
 }
 
+// NO click
 noBtn.onclick = () => {
+  // Show next message
   msg.textContent = noMessages[noCount % noMessages.length];
-  noCount++;
-  noImg.src = "https://toppng.com/uploads/preview/send-love-cartoon-couple-png-free-png-images-204776.png";
+  // Show next playful image
+  noImg.src = noImages[noCount % noImages.length];
   noImg.style.display = "block";
   yesImg.style.display = "none";
+  noCount++;
   swapBtns();
 }
 
+// YES click
 yesBtn.onclick = () => {
   buttons.style.display = "none";
   msg.style.display = "none";
   noImg.style.display = "none";
   yesImg.style.display = "block";
 
-  const hugs = [
-    "https://toppng.com/uploads/preview/love-couple-drawing-romance-hug-romantic-cartoon-couple-hu-png-274178.png",
-    "https://www.clipartmax.com/png/middle/445-4457091_hug-clipart-couple-hug-cartoon.png"
-  ];
-  yesImg.src = hugs[Math.floor(Math.random()*hugs.length)];
-
+  // Pick random romantic hug
+  yesImg.src = yesImages[Math.floor(Math.random()*yesImages.length)];
   finalMsg.textContent = "YAY ❤️ Sanika, you just made me the happiest person. Forever grateful for you 🦋";
 }
 </script>
-
 </body>
 </html>
