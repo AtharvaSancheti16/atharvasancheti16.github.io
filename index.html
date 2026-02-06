@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>For Sanika ❤️</title>
   <style>
-    /* Reset and base */
     body, html {
       margin: 0; padding: 0; height: 100%;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -21,7 +20,6 @@
       user-select: none;
     }
 
-    /* Floating hearts background */
     .hearts {
       position: fixed;
       top: 0; left: 0;
@@ -70,10 +68,9 @@
       }
     }
 
-    /* Container for content */
     .container {
       position: relative;
-      max-width: 400px;
+      max-width: 420px;
       z-index: 10;
       background: rgba(255 255 255 / 0.12);
       border-radius: 20px;
@@ -82,6 +79,10 @@
       backdrop-filter: blur(10px);
       animation: fadeInUp 1.2s ease forwards;
       opacity: 0;
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     @keyframes fadeInUp {
@@ -106,7 +107,6 @@
       opacity: 0;
     }
 
-    /* Butterfly icon near name */
     .butterfly-icon {
       font-size: 1.8rem;
       animation: flutter 3s ease-in-out infinite;
@@ -123,6 +123,7 @@
       margin: 1.2em 0 1.6em;
       animation: fadeInText 1.8s ease forwards;
       opacity: 0;
+      min-height: 2.3em;
     }
 
     strong {
@@ -179,13 +180,14 @@
     }
 
     #message {
-      margin-top: 25px;
+      margin-top: 15px;
       font-size: 1.1rem;
       font-style: italic;
       color: #ffdde1;
-      min-height: 1.5em;
+      min-height: 3em;
       animation: fadeInText 2.3s ease forwards;
       opacity: 0;
+      max-width: 350px;
     }
 
     #finalMessage {
@@ -202,7 +204,6 @@
       display: none !important;
     }
 
-    /* Fade in text animation */
     @keyframes fadeInText {
       to {
         opacity: 1;
@@ -212,7 +213,6 @@
       }
     }
 
-    /* Confetti container */
     .confetti-container {
       position: fixed;
       top: 0; left: 0;
@@ -222,7 +222,6 @@
       z-index: 1000;
     }
 
-    /* Confetti piece style */
     .confetti {
       position: absolute;
       width: 8px;
@@ -246,6 +245,17 @@
       }
     }
 
+    /* Image styles */
+    #noImage, #yesImage {
+      max-width: 100%;
+      max-height: 200px;
+      border-radius: 15px;
+      margin-top: 12px;
+      box-shadow: 0 0 15px #ff4d6daa;
+      user-select: none;
+      display: none;
+      object-fit: cover;
+    }
   </style>
 </head>
 <body>
@@ -256,19 +266,22 @@
       Hey Sanika <span class="butterfly-icon" aria-label="butterfly emoji">🦋</span>
     </h1>
 
-    <p>
+    <p id="introText">
       I made this little surprise just for you.<br />
       You brighten my world in ways words can’t capture.
     </p>
 
     <p><strong>Will you be my Valentine?</strong> 💘</p>
 
-    <div class="buttons">
+    <div class="buttons" id="buttonsContainer">
       <button id="yesBtn" aria-label="Say yes to be my Valentine" type="button">YES ❤️</button>
       <button id="noBtn" aria-label="Say no to be my Valentine" type="button">NO 😢</button>
     </div>
 
     <p id="message" aria-live="polite" role="alert" class="hidden"></p>
+
+    <img id="noImage" alt="Cute couple looking shy or playful" />
+    <img id="yesImage" alt="Couple hug image" />
 
     <p id="finalMessage" class="hidden" tabindex="0">
       YAYYY 💖<br /><br />
@@ -281,7 +294,7 @@
   <div class="confetti-container" aria-hidden="true"></div>
 
   <script>
-    // Animate floating hearts background
+    // Floating hearts background
     const heartsContainer = document.querySelector(".hearts");
 
     function createHeart() {
@@ -297,36 +310,90 @@
 
     setInterval(createHeart, 350);
 
-    // NO button shrinking + message logic
-    let noSize = 1;
+    // Elements
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
     const message = document.getElementById("message");
     const finalMessage = document.getElementById("finalMessage");
+    const buttonsContainer = document.getElementById("buttonsContainer");
+    const noImage = document.getElementById("noImage");
+    const yesImage = document.getElementById("yesImage");
+    const introText = document.getElementById("introText");
     const confettiContainer = document.querySelector(".confetti-container");
 
-    function noClicked() {
-      noSize -= 0.15;
+    // NO messages (cycle through)
+    const noMessages = [
+      "Nice try 😌 you’re not escaping that easily.",
+      "I see you, trying to run away! 🏃‍♀️💨",
+      "Come on, Sanika, don’t be shy!",
+      "You can't say no to my butterfly 🦋!",
+      "Running away won’t save you!",
+      "No? I think that means YES inside!",
+      "You’re stuck with me, forever.",
+      "Try again, my love! ❤️",
+    ];
 
-      if (noSize <= 0.3) {
-        noBtn.style.display = "none";
+    let noClickCount = 0;
+    let noSize = 1;
+    let buttonsSwapped = false;
+
+    function swapButtons() {
+      // Swap button order inside container
+      if (buttonsSwapped) {
+        buttonsContainer.appendChild(yesBtn);
+        buttonsContainer.appendChild(noBtn);
       } else {
-        noBtn.style.transform = `scale(${noSize})`;
+        buttonsContainer.appendChild(noBtn);
+        buttonsContainer.appendChild(yesBtn);
       }
-      message.textContent = "Nice try 😌 you’re not escaping that easily";
+      buttonsSwapped = !buttonsSwapped;
+    }
+
+    function noClicked() {
+      // Shrink NO button a bit (min size 0.4)
+      noSize = Math.max(0.4, noSize - 0.15);
+      noBtn.style.transform = `scale(${noSize})`;
+
+      // Show next message from list
+      message.textContent = noMessages[noClickCount % noMessages.length];
       message.classList.remove("hidden");
       message.style.opacity = "1";
+
+      // Swap buttons positions
+      swapButtons();
+
+      // Show NO image
+      yesImage.style.display = "none";
+      noImage.style.display = "block";
+      noImage.src = "https://i.ibb.co/GF9cY5Z/cute-couple-no.png"; // Cute shy couple image
+
+      noClickCount++;
     }
 
     function yesClicked() {
-      document.querySelector(".buttons").style.display = "none";
+      // Hide buttons and message
+      buttonsContainer.style.display = "none";
       message.style.display = "none";
+      noImage.style.display = "none";
+
+      // Show YES image (couple hug)
+      yesImage.style.display = "block";
+      const hugs = [
+        "https://i.ibb.co/7SJ3dMw/couple-hug1.jpg",
+        "https://i.ibb.co/8bsMdjy/couple-hug2.jpg",
+        "https://i.ibb.co/DWfYXW9/couple-hug3.jpg"
+      ];
+      const randomHug = hugs[Math.floor(Math.random() * hugs.length)];
+      yesImage.src = randomHug;
+
+      // Show final message
       finalMessage.classList.remove("hidden");
       finalMessage.focus();
+
       launchConfetti();
     }
 
-    // Confetti burst when YES clicked
+    // Confetti burst
     function launchConfetti() {
       const confettiCount = 30;
       for (let i = 0; i < confettiCount; i++) {
