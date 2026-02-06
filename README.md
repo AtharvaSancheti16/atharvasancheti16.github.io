@@ -1,2 +1,2 @@
-# Atharva.github.io
-Atharva.github.io
+# AtharvaSancheti16.github.io
+AtharvaSancheti16.github.io
