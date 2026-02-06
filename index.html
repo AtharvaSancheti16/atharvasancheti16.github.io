@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Sanika ❤️</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  color: white;
+  text-align: center;
+}
+
+.container {
+  padding: 40px 20px;
+}
+
+h1 {
+  font-size: 2.4em;
+}
+
+p {
+  font-size: 1.2em;
+  line-height: 1.6;
+}
+
+.buttons {
+  margin-top: 30px;
+}
+
+button {
+  padding: 15px 30px;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  margin: 10px;
+  transition: all 0.3s ease;
+}
+
+#yesBtn {
+  background: white;
+  color: #ff4d6d;
+}
+
+#noBtn {
+  background: #ff4d6d;
+  color: white;
+}
+
+.hidden {
+  display: none;
+}
+
+#message {
+  margin-top: 20px;
+  font-size: 1.1em;
+}
+
+#finalMessage {
+  margin-top: 30px;
+  font-size: 1.3em;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>Hey Sanika ❤️</h1>
+
+  <p>
+    I made this little surprise just for you.<br><br>
+    You have a way of making everything feel lighter, warmer,
+    and happier—and I smile every time I think about you.
+  </p>
+
+  <p><strong>Will you be my Valentine?</strong> 💘</p>
+
+  <div class="buttons">
+    <button id="yesBtn" onclick="yesClicked()">YES ❤️</button>
+    <button id="noBtn" onclick="noClicked()">NO 😢</button>
+  </div>
+
+  <p id="message" class="hidden"></p>
+
+  <p id="finalMessage" class="hidden">
+    YAYYY 💖<br><br>
+    Sanika, you just made me the happiest person.<br>
+    Thank you for choosing me.<br><br>
+    Forever grateful for you, my butterfly 🦋❤️
+  </p>
+</div>
+
+<script>
+let noSize = 1;
+
+function noClicked() {
+  noSize -= 0.15;
+  const noBtn = document.getElementById("noBtn");
+  const msg = document.getElementById("message");
+
+  if (noSize <= 0.3) {
+    noBtn.style.display = "none";
+  } else {
+    noBtn.style.transform = `scale(${noSize})`;
+  }
+
+  msg.innerHTML = "Nice try 😌 you’re not escaping that easily";
+  msg.classList.remove("hidden");
+}
+
+function yesClicked() {
+  document.querySelector(".buttons").style.display = "none";
+  document.getElementById("message").style.display = "none";
+  document.getElementById("finalMessage").classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>
