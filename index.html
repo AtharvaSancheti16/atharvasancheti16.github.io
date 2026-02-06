@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Sanika ❤️</title>
+<title>For Sanika 🦋</title>
 <style>
 body, html {
   margin: 0; padding: 0; height: 100%;
@@ -27,7 +27,7 @@ body, html {
   max-width: 400px;
 }
 
-h1 { font-size: 2.4rem; }
+h1 { font-size: 2.4rem; margin-bottom: 10px; }
 p { margin: 10px 0; font-size: 1.1rem; }
 
 .buttons {
@@ -48,6 +48,7 @@ button {
 
 #yesBtn { background: white; color: #ff4d6d; }
 #noBtn { background: #ff4d6d; color: white; }
+
 button:hover { transform: scale(1.05); }
 
 #message, #finalMessage {
@@ -84,13 +85,13 @@ img {
   </div>
 
   <p id="message"></p>
-  <img id="noImage" alt="Playful couple" />
-  <img id="yesImage" alt="Romantic couple hug" />
+  <img id="noImage" alt="Playful love reaction GIF" />
+  <img id="yesImage" alt="Romantic hug GIF" />
   <p id="finalMessage"></p>
 </div>
 
 <script>
-// Playful NO messages
+// Messages for NO button
 const noMessages = [
   "Nice try 😌 you’re not escaping that easily.",
   "I see you trying to run away 🏃‍♀️💨!",
@@ -99,15 +100,15 @@ const noMessages = [
   "You can’t say no to my heart 💗!"
 ];
 
-// Using reliable online images
+// GIFs for NO
 const noImages = [
-  "https://pikwizard.com/pw/medium/0a6c02c1bd358f7a042da95989d09219.png" /* Playful hug graphic */ 
+  "https://media1.tenor.com/images/70df0c11dc4502380963b38c5b50567c/tenor.gif?itemid=15139623",
+  "https://media1.tenor.com/images/a5ddf42ceedd8b7148cf905d3de95e01/tenor.gif?itemid=12498640"
 ];
 
+// GIF for YES
 const yesImages = [
-  "https://pikwizard.com/pw/medium/4b50457575e07a9aa7c83ec89e4ea9d7.png", /* Romantic couple hugging and smiling */ 
-  "https://pikwizard.com/pw/medium/cee7353216def3de6877740c3f0fb69a.png", /* Joyful hug */
-  "https://cdn.pixabay.com/photo/2021/11/24/22/37/couple-hugging-romantic-love-6817020_1280.jpg" /* Romantic real photo */ 
+  "https://media1.tenor.com/m/09d9_LKeh6kAAAAC/milk-and-mocha-cute.gif"
 ];
 
 let noCount = 0;
@@ -121,7 +122,7 @@ const yesImg = document.getElementById("yesImage");
 const finalMsg = document.getElementById("finalMessage");
 const buttons = document.getElementById("buttonsContainer");
 
-// Swap buttons function
+// Swap buttons positions for fun
 function swapBtns() {
   if (swapped) {
     buttons.appendChild(yesBtn);
@@ -156,6 +157,5 @@ yesBtn.onclick = () => {
   finalMsg.textContent = "YAY ❤️ Sanika, you just made me the happiest person. Forever grateful for you 🦋";
 }
 </script>
-
 </body>
 </html>
