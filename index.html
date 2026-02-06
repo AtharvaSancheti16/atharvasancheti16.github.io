@@ -18,7 +18,6 @@ body, html {
   overflow-x: hidden;
 }
 
-/* Container */
 .container {
   background: rgba(255,255,255,0.15);
   padding: 25px;
@@ -26,15 +25,20 @@ body, html {
   backdrop-filter: blur(10px);
   width: 100%;
   max-width: 400px;
-  z-index: 10;
 }
 
 h1 { font-size: 2.4rem; }
-p { margin: 12px 0; font-size: 1.1rem; }
-.buttons { display: flex; justify-content: center; gap: 15px; margin-top: 15px; }
+p { margin: 10px 0; font-size: 1.1rem; }
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+}
 
 button {
-  padding: 12px 30px;
+  padding: 12px 28px;
   border: none;
   border-radius: 25px;
   cursor: pointer;
@@ -44,10 +48,23 @@ button {
 
 #yesBtn { background: white; color: #ff4d6d; }
 #noBtn { background: #ff4d6d; color: white; }
+
 button:hover { transform: scale(1.05); }
 
-#message, #finalMessage { min-height: 2.5em; margin-top: 10px; color: #ffe0f0; font-style: italic; }
-img { max-width: 90%; margin-top: 12px; border-radius: 15px; box-shadow: 0 0 15px #ff4d6daa; display: none; }
+#message, #finalMessage {
+  min-height: 2.5em;
+  color: #ffe0f0;
+  font-style: italic;
+  margin-top: 10px;
+}
+
+img {
+  max-width: 90%;
+  margin-top: 12px;
+  border-radius: 15px;
+  display: none;
+  box-shadow: 0 0 15px #ff4d6daa;
+}
 
 @media (max-width: 400px) {
   h1 { font-size: 2rem; }
@@ -55,11 +72,11 @@ img { max-width: 90%; margin-top: 12px; border-radius: 15px; box-shadow: 0 0 15p
 }
 </style>
 </head>
-<body>
 
+<body>
 <div class="container">
   <h1>Hey Sanika 🦋</h1>
-  <p>I made this little surprise just for you.<br>It comes straight from my heart.</p>
+  <p>I made this little surprise just for you.<br>It comes from my heart.</p>
   <p><strong>Will you be my Valentine?</strong> 💘</p>
 
   <div class="buttons" id="buttonsContainer">
@@ -68,13 +85,13 @@ img { max-width: 90%; margin-top: 12px; border-radius: 15px; box-shadow: 0 0 15p
   </div>
 
   <p id="message"></p>
-  <img id="noImage" alt="Playful couple" />
-  <img id="yesImage" alt="Romantic hug" />
+  <img id="noImage" alt="Playful cute couple" />
+  <img id="yesImage" alt="Romantic couple hug" />
   <p id="finalMessage"></p>
 </div>
 
 <script>
-// Messages and images
+// Messages & images
 const noMessages = [
   "Nice try 😌 you’re not escaping that easily.",
   "I see you trying to run away 🏃‍♀️💨!",
@@ -83,22 +100,16 @@ const noMessages = [
   "You can’t say no to my heart 💗!"
 ];
 
-// Reliable NO images (playful/funny)
 const noImages = [
-  "https://i.ibb.co/N6NmNfM/playful1.png",
-  "https://i.ibb.co/6v9bGcd/playful2.png",
-  "https://i.ibb.co/6HRtjQZ/playful3.png"
+  "https://clipartmax.com/png/middle/387-3870515_clip-art-hot-couple-hugging-transparent-clip-art-hot-couple-hugging-transparent.png" /*NO image*/
 ];
 
-// Reliable YES hug images (romantic)
 const yesImages = [
-  "https://i.ibb.co/J7k0XcK/romantic1.png",
-  "https://i.ibb.co/TBGrs6d/romantic2.png",
-  "https://i.ibb.co/0QW4b0V/romantic3.png"
+  "https://www.pngkit.com/png/detail/90-902390_love-couple-drawing-romance-hug-romantic-cartoon-couple.png",
+  "https://www.nicepng.com/png/detail/8-83806_couple-png-image-romantic-love-kiss-hug.png"
 ];
 
-let noCount = 0;
-let swapped = false;
+let noCount = 0, swapped = false;
 
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
@@ -108,9 +119,8 @@ const yesImg = document.getElementById("yesImage");
 const finalMsg = document.getElementById("finalMessage");
 const buttons = document.getElementById("buttonsContainer");
 
-// Swap buttons positions
 function swapBtns() {
-  if(swapped) {
+  if (swapped) {
     buttons.appendChild(yesBtn);
     buttons.appendChild(noBtn);
   } else {
@@ -122,14 +132,12 @@ function swapBtns() {
 
 // NO click
 noBtn.onclick = () => {
-  // Show next message
   msg.textContent = noMessages[noCount % noMessages.length];
-  // Show next playful image
-  noImg.src = noImages[noCount % noImages.length];
   noImg.style.display = "block";
   yesImg.style.display = "none";
-  noCount++;
+  noImg.src = noImages[0];
   swapBtns();
+  noCount++;
 }
 
 // YES click
@@ -139,8 +147,9 @@ yesBtn.onclick = () => {
   noImg.style.display = "none";
   yesImg.style.display = "block";
 
-  // Pick random romantic hug
-  yesImg.src = yesImages[Math.floor(Math.random()*yesImages.length)];
+  const randomHug = yesImages[Math.floor(Math.random() * yesImages.length)];
+  yesImg.src = randomHug;
+
   finalMsg.textContent = "YAY ❤️ Sanika, you just made me the happiest person. Forever grateful for you 🦋";
 }
 </script>
