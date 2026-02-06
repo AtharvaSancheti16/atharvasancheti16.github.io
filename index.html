@@ -1,124 +1,349 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Sanika ❤️</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>For Sanika ❤️</title>
+  <style>
+    /* Reset and base */
+    body, html {
+      margin: 0; padding: 0; height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      color: white;
+      overflow-x: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      flex-direction: column;
+      padding: 30px 20px;
+      user-select: none;
+    }
 
-<style>
-body {
-  margin: 0;
-  font-family: 'Arial', sans-serif;
-  background: linear-gradient(135deg, #ff758c, #ff7eb3);
-  color: white;
-  text-align: center;
-}
+    /* Floating hearts background */
+    .hearts {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      overflow: visible;
+      z-index: 0;
+    }
+    .heart {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background: #ff4d6d;
+      transform: rotate(45deg);
+      animation: floatUp linear infinite;
+      opacity: 0.8;
+      border-radius: 4px 4px 0 0;
+      box-shadow: inset -2px -2px 0 #ff7285;
+    }
+    .heart:before,
+    .heart:after {
+      content: "";
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background: #ff4d6d;
+      border-radius: 50%;
+    }
+    .heart:before {
+      top: -7.5px;
+      left: 0;
+    }
+    .heart:after {
+      left: 7.5px;
+      top: 0;
+    }
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-120vh) rotate(45deg);
+        opacity: 0;
+      }
+    }
 
-.container {
-  padding: 40px 20px;
-}
+    /* Container for content */
+    .container {
+      position: relative;
+      max-width: 400px;
+      z-index: 10;
+      background: rgba(255 255 255 / 0.12);
+      border-radius: 20px;
+      padding: 30px 25px;
+      box-shadow: 0 0 20px #ff4d6daa;
+      backdrop-filter: blur(10px);
+      animation: fadeInUp 1.2s ease forwards;
+      opacity: 0;
+    }
 
-h1 {
-  font-size: 2.4em;
-}
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+    }
 
-p {
-  font-size: 1.2em;
-  line-height: 1.6;
-}
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.15em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      animation: fadeInText 1.5s ease forwards;
+      opacity: 0;
+    }
 
-.buttons {
-  margin-top: 30px;
-}
+    /* Butterfly icon near name */
+    .butterfly-icon {
+      font-size: 1.8rem;
+      animation: flutter 3s ease-in-out infinite;
+      user-select: none;
+    }
+    @keyframes flutter {
+      0%, 100% { transform: rotate(0deg) translateY(0); }
+      50% { transform: rotate(15deg) translateY(-6px); }
+    }
 
-button {
-  padding: 15px 30px;
-  font-size: 1.1em;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  margin: 10px;
-  transition: all 0.3s ease;
-}
+    p {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      margin: 1.2em 0 1.6em;
+      animation: fadeInText 1.8s ease forwards;
+      opacity: 0;
+    }
 
-#yesBtn {
-  background: white;
-  color: #ff4d6d;
-}
+    strong {
+      color: #fff1f3;
+    }
 
-#noBtn {
-  background: #ff4d6d;
-  color: white;
-}
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      animation: fadeInText 2s ease forwards;
+      opacity: 0;
+    }
 
-.hidden {
-  display: none;
-}
+    button {
+      padding: 14px 38px;
+      font-size: 1.15rem;
+      font-weight: 600;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 12px transparent;
+      transition: all 0.3s ease;
+      user-select: none;
+      outline-offset: 3px;
+    }
+    button:focus {
+      outline: 2px solid #fff3f6;
+    }
 
-#message {
-  margin-top: 20px;
-  font-size: 1.1em;
-}
+    #yesBtn {
+      background: white;
+      color: #ff4d6d;
+      box-shadow: 0 0 15px #ff4d6d;
+      animation: glow 2.5s ease-in-out infinite;
+    }
+    #yesBtn:hover {
+      box-shadow: 0 0 25px #ff607d, 0 0 40px #ff607d;
+      transform: scale(1.05);
+    }
 
-#finalMessage {
-  margin-top: 30px;
-  font-size: 1.3em;
-}
-</style>
+    #noBtn {
+      background: #ff4d6d;
+      color: white;
+    }
+    #noBtn:hover {
+      background: #ff607d;
+      transform: scale(1.05);
+    }
+
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 15px #ff4d6d; }
+      50% { box-shadow: 0 0 30px #ff6b82; }
+    }
+
+    #message {
+      margin-top: 25px;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: #ffdde1;
+      min-height: 1.5em;
+      animation: fadeInText 2.3s ease forwards;
+      opacity: 0;
+    }
+
+    #finalMessage {
+      margin-top: 30px;
+      font-size: 1.3rem;
+      font-weight: 600;
+      line-height: 1.5;
+      color: #ffd6dd;
+      animation: fadeInText 2.5s ease forwards;
+      opacity: 0;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Fade in text animation */
+    @keyframes fadeInText {
+      to {
+        opacity: 1;
+      }
+      from {
+        opacity: 0;
+      }
+    }
+
+    /* Confetti container */
+    .confetti-container {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      pointer-events: none;
+      overflow: visible;
+      z-index: 1000;
+    }
+
+    /* Confetti piece style */
+    .confetti {
+      position: absolute;
+      width: 8px;
+      height: 12px;
+      background-color: #ff4d6d;
+      opacity: 0.8;
+      transform-origin: center;
+      animation: confetti-fall linear forwards;
+      border-radius: 2px;
+      box-shadow: 0 0 5px #ff7a91;
+    }
+
+    @keyframes confetti-fall {
+      0% {
+        opacity: 0.8;
+        transform: translateY(0) rotate(0deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+
+  </style>
 </head>
-
 <body>
+  <div class="hearts" aria-hidden="true"></div>
 
-<div class="container">
-  <h1>Hey Sanika ❤️</h1>
+  <div class="container" role="main" aria-label="Valentine message for Sanika">
+    <h1>
+      Hey Sanika <span class="butterfly-icon" aria-label="butterfly emoji">🦋</span>
+    </h1>
 
-  <p>
-    I made this little surprise just for you.<br><br>
-    You have a way of making everything feel lighter, warmer,
-    and happier—and I smile every time I think about you.
-  </p>
+    <p>
+      I made this little surprise just for you.<br />
+      You brighten my world in ways words can’t capture.
+    </p>
 
-  <p><strong>Will you be my Valentine?</strong> 💘</p>
+    <p><strong>Will you be my Valentine?</strong> 💘</p>
 
-  <div class="buttons">
-    <button id="yesBtn" onclick="yesClicked()">YES ❤️</button>
-    <button id="noBtn" onclick="noClicked()">NO 😢</button>
+    <div class="buttons">
+      <button id="yesBtn" aria-label="Say yes to be my Valentine" type="button">YES ❤️</button>
+      <button id="noBtn" aria-label="Say no to be my Valentine" type="button">NO 😢</button>
+    </div>
+
+    <p id="message" aria-live="polite" role="alert" class="hidden"></p>
+
+    <p id="finalMessage" class="hidden" tabindex="0">
+      YAYYY 💖<br /><br />
+      Sanika, you just made me the happiest person.<br />
+      Thank you for choosing me.<br /><br />
+      Forever grateful for you, my butterfly 🦋❤️
+    </p>
   </div>
 
-  <p id="message" class="hidden"></p>
+  <div class="confetti-container" aria-hidden="true"></div>
 
-  <p id="finalMessage" class="hidden">
-    YAYYY 💖<br><br>
-    Sanika, you just made me the happiest person.<br>
-    Thank you for choosing me.<br><br>
-    Forever grateful for you, my butterfly 🦋❤️
-  </p>
-</div>
+  <script>
+    // Animate floating hearts background
+    const heartsContainer = document.querySelector(".hearts");
 
-<script>
-let noSize = 1;
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 5 + Math.random() * 5 + "s";
+      heart.style.width = 12 + Math.random() * 12 + "px";
+      heart.style.height = heart.style.width;
+      heartsContainer.appendChild(heart);
+      setTimeout(() => heart.remove(), 10000);
+    }
 
-function noClicked() {
-  noSize -= 0.15;
-  const noBtn = document.getElementById("noBtn");
-  const msg = document.getElementById("message");
+    setInterval(createHeart, 350);
 
-  if (noSize <= 0.3) {
-    noBtn.style.display = "none";
-  } else {
-    noBtn.style.transform = `scale(${noSize})`;
-  }
+    // NO button shrinking + message logic
+    let noSize = 1;
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const message = document.getElementById("message");
+    const finalMessage = document.getElementById("finalMessage");
+    const confettiContainer = document.querySelector(".confetti-container");
 
-  msg.innerHTML = "Nice try 😌 you’re not escaping that easily";
-  msg.classList.remove("hidden");
-}
+    function noClicked() {
+      noSize -= 0.15;
 
-function yesClicked() {
-  document.querySelector(".buttons").style.display = "none";
-  document.getElementById("message").style.display = "none";
-  document.getElementById("finalMessage").classList.remove("hidden");
-}
-</script>
+      if (noSize <= 0.3) {
+        noBtn.style.display = "none";
+      } else {
+        noBtn.style.transform = `scale(${noSize})`;
+      }
+      message.textContent = "Nice try 😌 you’re not escaping that easily";
+      message.classList.remove("hidden");
+      message.style.opacity = "1";
+    }
 
+    function yesClicked() {
+      document.querySelector(".buttons").style.display = "none";
+      message.style.display = "none";
+      finalMessage.classList.remove("hidden");
+      finalMessage.focus();
+      launchConfetti();
+    }
+
+    // Confetti burst when YES clicked
+    function launchConfetti() {
+      const confettiCount = 30;
+      for (let i = 0; i < confettiCount; i++) {
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+        confetti.style.left = 50 + Math.random() * 60 - 30 + "vw";
+        confetti.style.top = -10 + "vh";
+        confetti.style.backgroundColor = `hsl(${Math.random() * 60 + 340}, 90%, 70%)`;
+        confetti.style.animationDuration = 2 + Math.random() * 1.5 + "s";
+        confetti.style.animationDelay = (i * 100) / confettiCount + "ms";
+        confettiContainer.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 3500);
+      }
+    }
+
+    noBtn.addEventListener("click", noClicked);
+    yesBtn.addEventListener("click", yesClicked);
+  </script>
 </body>
 </html>
