@@ -9,33 +9,38 @@
 body, html {
   margin: 0;
   padding: 0;
-  height: 100%;
+  min-height: 100vh;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #ff758c, #ff7eb3);
   color: white;
-  overflow: hidden;
-}
-
-.container {
-  position: relative;
-  height: 100vh;
+  overflow-x: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
 }
 
-.card {
+.container {
   background: rgba(255,255,255,0.15);
   padding: 25px;
   border-radius: 20px;
   backdrop-filter: blur(12px);
   width: 90%;
   max-width: 450px;
+  text-align: center;
   box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  position: relative;
 }
 
-h1 { font-size: 2.2rem; margin-bottom: 10px; }
+h1 { font-size: 2.3rem; margin-bottom: 10px; }
+p { margin: 10px 0; }
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+  position: relative;
+}
 
 button {
   padding: 12px 28px;
@@ -44,19 +49,17 @@ button {
   cursor: pointer;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  position: relative;
 }
 
 #yesBtn {
   background: white;
   color: #ff4d6d;
-  margin-right: 15px;
 }
 
 #noBtn {
   background: #ff4d6d;
   color: white;
-  position: absolute;
+  position: relative;
 }
 
 img {
@@ -69,9 +72,10 @@ img {
   box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
 
-#finalMessage {
-  margin-top: 15px;
+#message, #finalMessage {
+  margin-top: 12px;
   font-style: italic;
+  min-height: 2em;
 }
 
 /* Confetti */
@@ -79,7 +83,6 @@ img {
   position: fixed;
   width: 10px;
   height: 10px;
-  background-color: red;
   top: -10px;
   animation: fall 3s linear forwards;
 }
@@ -90,36 +93,41 @@ img {
     opacity: 0;
   }
 }
+
+@media (max-width: 500px) {
+  h1 { font-size: 2rem; }
+  button { font-size: 1rem; padding: 10px 20px; }
+}
 </style>
 </head>
 
 <body>
 
 <div class="container">
-  <div class="card">
-    <h1>Hey Sanika 🦋</h1>
-    <p>Will you be my Valentine? 💘</p>
+  <h1>Hey Sanika 🦋</h1>
+  <p>I made this little surprise just for you.<br>It comes straight from my heart.</p>
+  <p><strong>Will you be my Valentine?</strong> 💘</p>
 
+  <div class="buttons" id="buttonsContainer">
     <button id="yesBtn">YES ❤️</button>
     <button id="noBtn">NO 😢</button>
-
-    <img id="imageDisplay">
-    <p id="finalMessage"></p>
   </div>
+
+  <p id="message"></p>
+  <img id="imageDisplay">
+  <p id="finalMessage"></p>
 </div>
 
 <script>
 
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
-const imageDisplay = document.getElementById("imageDisplay");
-const finalMsg = document.getElementById("finalMessage");
+const noMessages = [
+  "Nice try 😌 you’re not escaping that easily.",
+  "I see you trying to run away 🏃‍♀️💨!",
+  "Come on, don’t be shy 😘.",
+  "No means YES deep inside 💕!",
+  "You can’t say no to my heart 💗!"
+];
 
-let noScale = 1;
-let yesScale = 1;
-let clickCount = 0;
-
-/* Your NO images */
 const noImages = [
   "https://media1.tenor.com/images/70df0c11dc4502380963b38c5b50567c/tenor.gif?itemid=15139623",
   "https://media1.tenor.com/images/a5ddf42ceedd8b7148cf905d3de95e01/tenor.gif?itemid=12498640",
@@ -130,15 +138,27 @@ const noImages = [
 const yesImage =
   "https://media1.tenor.com/m/09d9_LKeh6kAAAAC/milk-and-mocha-cute.gif";
 
-/* Random position function */
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const msg = document.getElementById("message");
+const imageDisplay = document.getElementById("imageDisplay");
+const finalMsg = document.getElementById("finalMessage");
+
+let noScale = 1;
+let yesScale = 1;
+let clickCount = 0;
+let firstClickDone = false;
+
+/* Move NO randomly */
 function moveNoButton() {
-  const padding = 50;
+  const padding = 20;
   const maxX = window.innerWidth - noBtn.offsetWidth - padding;
   const maxY = window.innerHeight - noBtn.offsetHeight - padding;
 
   const randomX = Math.random() * maxX;
   const randomY = Math.random() * maxY;
 
+  noBtn.style.position = "fixed";
   noBtn.style.left = randomX + "px";
   noBtn.style.top = randomY + "px";
 }
@@ -146,21 +166,25 @@ function moveNoButton() {
 /* NO click */
 noBtn.addEventListener("click", () => {
 
+  // Show message
+  msg.textContent = noMessages[clickCount % noMessages.length];
+
   // Show image
   imageDisplay.src = noImages[clickCount % noImages.length];
   imageDisplay.style.display = "block";
 
-  // Shrink NO
-  noScale *= 0.8;
-  noBtn.style.transform = `scale(${noScale})`;
+  // First click keeps position normal
+  if (firstClickDone) {
+    noScale *= 0.75;
+    noBtn.style.transform = `scale(${noScale})`;
+    moveNoButton();
+  }
 
-  // Grow YES
+  // Grow YES every time
   yesScale *= 1.15;
   yesBtn.style.transform = `scale(${yesScale})`;
 
-  // Move NO
-  moveNoButton();
-
+  firstClickDone = true;
   clickCount++;
 });
 
@@ -173,13 +197,13 @@ yesBtn.addEventListener("click", () => {
   finalMsg.textContent =
     "YAY ❤️ Sanika, you just made me the happiest person ever 🦋";
 
-  noBtn.style.display = "none";
-  yesBtn.style.display = "none";
+  document.getElementById("buttonsContainer").style.display = "none";
+  msg.style.display = "none";
 
   launchConfetti();
 });
 
-/* Confetti function */
+/* Confetti */
 function launchConfetti() {
   for (let i = 0; i < 120; i++) {
     const confetti = document.createElement("div");
@@ -193,17 +217,11 @@ function launchConfetti() {
 
     document.body.appendChild(confetti);
 
-    setTimeout(() => {
-      confetti.remove();
-    }, 3000);
+    setTimeout(() => confetti.remove(), 3000);
   }
 }
-
-/* Initial placement */
-moveNoButton();
 
 </script>
 
 </body>
 </html>
-
