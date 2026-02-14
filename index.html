@@ -13,15 +13,15 @@ body, html {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #ff758c, #ff7eb3);
   color: white;
-  overflow-x: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-x: hidden;
 }
 
 .container {
   background: rgba(255,255,255,0.15);
-  padding: 25px;
+  padding: 30px 25px 40px 25px;
   border-radius: 20px;
   backdrop-filter: blur(12px);
   width: 90%;
@@ -38,7 +38,9 @@ p { margin: 10px 0; }
   display: flex;
   justify-content: center;
   gap: 15px;
-  margin-top: 15px;
+  margin-top: 20px;
+  min-height: 70px;
+  align-items: center;
   position: relative;
 }
 
@@ -48,18 +50,31 @@ button {
   border-radius: 30px;
   cursor: pointer;
   font-size: 1.1rem;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease;
+  transform-origin: center;
 }
 
 #yesBtn {
   background: white;
   color: #ff4d6d;
+  z-index: 2;
 }
 
 #noBtn {
   background: #ff4d6d;
   color: white;
-  position: relative;
+  z-index: 2;
+}
+
+#message {
+  margin-top: 20px;
+  min-height: 50px;
+  font-style: italic;
+}
+
+#finalMessage {
+  margin-top: 15px;
+  font-style: italic;
 }
 
 img {
@@ -70,12 +85,6 @@ img {
   border-radius: 15px;
   display: none;
   box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-}
-
-#message, #finalMessage {
-  margin-top: 12px;
-  font-style: italic;
-  min-height: 2em;
 }
 
 /* Confetti */
@@ -108,7 +117,7 @@ img {
   <p>I made this little surprise just for you.<br>It comes straight from my heart.</p>
   <p><strong>Will you be my Valentine?</strong> 💘</p>
 
-  <div class="buttons" id="buttonsContainer">
+  <div class="buttons">
     <button id="yesBtn">YES ❤️</button>
     <button id="noBtn">NO 😢</button>
   </div>
@@ -149,7 +158,7 @@ let yesScale = 1;
 let clickCount = 0;
 let firstClickDone = false;
 
-/* Move NO randomly */
+/* Move NO randomly after first click */
 function moveNoButton() {
   const padding = 20;
   const maxX = window.innerWidth - noBtn.offsetWidth - padding;
@@ -166,21 +175,17 @@ function moveNoButton() {
 /* NO click */
 noBtn.addEventListener("click", () => {
 
-  // Show message
   msg.textContent = noMessages[clickCount % noMessages.length];
 
-  // Show image
   imageDisplay.src = noImages[clickCount % noImages.length];
   imageDisplay.style.display = "block";
 
-  // First click keeps position normal
   if (firstClickDone) {
     noScale *= 0.75;
     noBtn.style.transform = `scale(${noScale})`;
     moveNoButton();
   }
 
-  // Grow YES every time
   yesScale *= 1.15;
   yesBtn.style.transform = `scale(${yesScale})`;
 
@@ -197,13 +202,13 @@ yesBtn.addEventListener("click", () => {
   finalMsg.textContent =
     "YAY ❤️ Sanika, you just made me the happiest person ever 🦋";
 
-  document.getElementById("buttonsContainer").style.display = "none";
+  document.querySelector(".buttons").style.display = "none";
   msg.style.display = "none";
 
   launchConfetti();
 });
 
-/* Confetti */
+/* Confetti effect */
 function launchConfetti() {
   for (let i = 0; i < 120; i++) {
     const confetti = document.createElement("div");
