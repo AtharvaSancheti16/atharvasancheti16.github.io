@@ -28,7 +28,6 @@ body, html {
   max-width: 450px;
   text-align: center;
   box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  position: relative;
 }
 
 h1 { font-size: 2.3rem; margin-bottom: 10px; }
@@ -41,7 +40,6 @@ p { margin: 10px 0; }
   margin-top: 20px;
   min-height: 70px;
   align-items: center;
-  position: relative;
 }
 
 button {
@@ -57,13 +55,11 @@ button {
 #yesBtn {
   background: white;
   color: #ff4d6d;
-  z-index: 2;
 }
 
 #noBtn {
   background: #ff4d6d;
   color: white;
-  z-index: 2;
 }
 
 #message {
@@ -101,11 +97,6 @@ img {
     transform: translateY(110vh) rotate(720deg);
     opacity: 0;
   }
-}
-
-@media (max-width: 500px) {
-  h1 { font-size: 2rem; }
-  button { font-size: 1rem; padding: 10px 20px; }
 }
 </style>
 </head>
@@ -158,7 +149,8 @@ let yesScale = 1;
 let clickCount = 0;
 let firstClickDone = false;
 
-/* Move NO randomly after first click */
+const MIN_NO_SCALE = 0.4;  // 👈 prevents disappearing
+
 function moveNoButton() {
   const padding = 20;
   const maxX = window.innerWidth - noBtn.offsetWidth - padding;
@@ -172,7 +164,6 @@ function moveNoButton() {
   noBtn.style.top = randomY + "px";
 }
 
-/* NO click */
 noBtn.addEventListener("click", () => {
 
   msg.textContent = noMessages[clickCount % noMessages.length];
@@ -181,19 +172,20 @@ noBtn.addEventListener("click", () => {
   imageDisplay.style.display = "block";
 
   if (firstClickDone) {
-    noScale *= 0.75;
-    noBtn.style.transform = `scale(${noScale})`;
+    if (noScale > MIN_NO_SCALE) {
+      noScale *= 0.85;  // 👈 slower shrink
+      noBtn.style.transform = `scale(${noScale})`;
+    }
     moveNoButton();
   }
 
-  yesScale *= 1.15;
+  yesScale *= 1.12;
   yesBtn.style.transform = `scale(${yesScale})`;
 
   firstClickDone = true;
   clickCount++;
 });
 
-/* YES click */
 yesBtn.addEventListener("click", () => {
 
   imageDisplay.src = yesImage;
@@ -208,7 +200,6 @@ yesBtn.addEventListener("click", () => {
   launchConfetti();
 });
 
-/* Confetti effect */
 function launchConfetti() {
   for (let i = 0; i < 120; i++) {
     const confetti = document.createElement("div");
