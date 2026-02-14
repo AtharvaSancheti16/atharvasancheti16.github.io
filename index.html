@@ -4,158 +4,206 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Sanika 🦋</title>
+
 <style>
 body, html {
-  margin: 0; padding: 0; height: 100%;
+  margin: 0;
+  padding: 0;
+  height: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #ff758c, #ff7eb3);
   color: white;
+  overflow: hidden;
+}
+
+.container {
+  position: relative;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  overflow-x: hidden;
-  padding: 20px;
 }
 
-.container {
+.card {
   background: rgba(255,255,255,0.15);
   padding: 25px;
   border-radius: 20px;
-  backdrop-filter: blur(10px);
-  width: 100%;
-  max-width: 400px;
+  backdrop-filter: blur(12px);
+  width: 90%;
+  max-width: 450px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
-h1 { font-size: 2.4rem; margin-bottom: 10px; }
-p { margin: 10px 0; font-size: 1.1rem; }
-
-.buttons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 15px;
-}
+h1 { font-size: 2.2rem; margin-bottom: 10px; }
 
 button {
   padding: 12px 28px;
   border: none;
-  border-radius: 25px;
+  border-radius: 30px;
   cursor: pointer;
   font-size: 1.1rem;
-  transition: transform 0.3s;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
-#yesBtn { background: white; color: #ff4d6d; }
-#noBtn { background: #ff4d6d; color: white; }
+#yesBtn {
+  background: white;
+  color: #ff4d6d;
+  margin-right: 15px;
+}
 
-button:hover { transform: scale(1.05); }
-
-#message, #finalMessage {
-  min-height: 2.5em;
-  color: #ffe0f0;
-  font-style: italic;
-  margin-top: 10px;
+#noBtn {
+  background: #ff4d6d;
+  color: white;
+  position: absolute;
 }
 
 img {
-  max-width: 90%;
-  margin-top: 12px;
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  margin-top: 15px;
   border-radius: 15px;
   display: none;
-  box-shadow: 0 0 15px #ff4d6daa;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
 
-@media (max-width: 400px) {
-  h1 { font-size: 2rem; }
-  button { padding: 10px 20px; font-size: 1rem; }
+#finalMessage {
+  margin-top: 15px;
+  font-style: italic;
+}
+
+/* Confetti */
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  top: -10px;
+  animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
+  }
 }
 </style>
 </head>
 
 <body>
-<div class="container">
-  <h1>Hey Sanika 🦋</h1>
-  <p>I made this little surprise just for you.<br>It comes straight from my heart.</p>
-  <p><strong>Will you be my Valentine?</strong> 💘</p>
 
-  <div class="buttons" id="buttonsContainer">
+<div class="container">
+  <div class="card">
+    <h1>Hey Sanika 🦋</h1>
+    <p>Will you be my Valentine? 💘</p>
+
     <button id="yesBtn">YES ❤️</button>
     <button id="noBtn">NO 😢</button>
-  </div>
 
-  <p id="message"></p>
-  <img id="noImage" alt="Playful love reaction GIF" />
-  <img id="yesImage" alt="Romantic hug GIF" />
-  <p id="finalMessage"></p>
+    <img id="imageDisplay">
+    <p id="finalMessage"></p>
+  </div>
 </div>
 
 <script>
-// Messages for NO button
-const noMessages = [
-  "Nice try 😌 you’re not escaping that easily.",
-  "I see you trying to run away 🏃‍♀️💨!",
-  "Come on, don’t be shy 😘.",
-  "No means YES deep inside 💕!",
-  "You can’t say no to my heart 💗!"
-];
-
-// GIFs for NO
-const noImages = [
-  "https://media1.tenor.com/images/70df0c11dc4502380963b38c5b50567c/tenor.gif?itemid=15139623",
-  "https://media1.tenor.com/images/a5ddf42ceedd8b7148cf905d3de95e01/tenor.gif?itemid=12498640"
-];
-
-// GIF for YES
-const yesImages = [
-  "https://media1.tenor.com/m/09d9_LKeh6kAAAAC/milk-and-mocha-cute.gif"
-];
-
-let noCount = 0;
-let swapped = false;
 
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
-const msg = document.getElementById("message");
-const noImg = document.getElementById("noImage");
-const yesImg = document.getElementById("yesImage");
+const imageDisplay = document.getElementById("imageDisplay");
 const finalMsg = document.getElementById("finalMessage");
-const buttons = document.getElementById("buttonsContainer");
 
-// Swap buttons positions for fun
-function swapBtns() {
-  if (swapped) {
-    buttons.appendChild(yesBtn);
-    buttons.appendChild(noBtn);
-  } else {
-    buttons.appendChild(noBtn);
-    buttons.appendChild(yesBtn);
+let noScale = 1;
+let yesScale = 1;
+let clickCount = 0;
+
+/* Your NO images */
+const noImages = [
+  "https://media1.tenor.com/images/70df0c11dc4502380963b38c5b50567c/tenor.gif?itemid=15139623",
+  "https://media1.tenor.com/images/a5ddf42ceedd8b7148cf905d3de95e01/tenor.gif?itemid=12498640",
+  "https://atchuup.com/wp-content/uploads/but_you_didnt-9.jpg",
+  "https://media0.giphy.com/media/TpIvWDnkQ0TJ9UyyFN/giphy.gif"
+];
+
+const yesImage =
+  "https://media1.tenor.com/m/09d9_LKeh6kAAAAC/milk-and-mocha-cute.gif";
+
+/* Random position function */
+function moveNoButton() {
+  const padding = 50;
+  const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+  const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+  const randomX = Math.random() * maxX;
+  const randomY = Math.random() * maxY;
+
+  noBtn.style.left = randomX + "px";
+  noBtn.style.top = randomY + "px";
+}
+
+/* NO click */
+noBtn.addEventListener("click", () => {
+
+  // Show image
+  imageDisplay.src = noImages[clickCount % noImages.length];
+  imageDisplay.style.display = "block";
+
+  // Shrink NO
+  noScale *= 0.8;
+  noBtn.style.transform = `scale(${noScale})`;
+
+  // Grow YES
+  yesScale *= 1.15;
+  yesBtn.style.transform = `scale(${yesScale})`;
+
+  // Move NO
+  moveNoButton();
+
+  clickCount++;
+});
+
+/* YES click */
+yesBtn.addEventListener("click", () => {
+
+  imageDisplay.src = yesImage;
+  imageDisplay.style.display = "block";
+
+  finalMsg.textContent =
+    "YAY ❤️ Sanika, you just made me the happiest person ever 🦋";
+
+  noBtn.style.display = "none";
+  yesBtn.style.display = "none";
+
+  launchConfetti();
+});
+
+/* Confetti function */
+function launchConfetti() {
+  for (let i = 0; i < 120; i++) {
+    const confetti = document.createElement("div");
+    confetti.classList.add("confetti");
+
+    confetti.style.left = Math.random() * 100 + "vw";
+    confetti.style.backgroundColor =
+      `hsl(${Math.random() * 360}, 100%, 50%)`;
+    confetti.style.animationDuration =
+      (Math.random() * 2 + 2) + "s";
+
+    document.body.appendChild(confetti);
+
+    setTimeout(() => {
+      confetti.remove();
+    }, 3000);
   }
-  swapped = !swapped;
 }
 
-// NO click behavior
-noBtn.onclick = () => {
-  msg.textContent = noMessages[noCount % noMessages.length];
-  noImg.src = noImages[noCount % noImages.length];
-  noImg.style.display = "block";
-  yesImg.style.display = "none";
-  swapBtns();
-  noCount++;
-}
+/* Initial placement */
+moveNoButton();
 
-// YES click behavior
-yesBtn.onclick = () => {
-  buttons.style.display = "none";
-  msg.style.display = "none";
-  noImg.style.display = "none";
-  yesImg.style.display = "block";
-
-  const randomHug = yesImages[Math.floor(Math.random() * yesImages.length)];
-  yesImg.src = randomHug;
-
-  finalMsg.textContent = "YAY ❤️ Sanika, you just made me the happiest person. Forever grateful for you 🦋";
-}
 </script>
+
 </body>
 </html>
+
