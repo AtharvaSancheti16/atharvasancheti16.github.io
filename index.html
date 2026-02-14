@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Sanika 🦋</title>
+<title>For My Pakhru 🦋</title>
 
 <style>
 body, html {
@@ -11,12 +11,28 @@ body, html {
   padding: 0;
   min-height: 100vh;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow-x: hidden;
+}
+
+/* Floating Hearts */
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 20px;
+  animation: floatUp 8s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes floatUp {
+  to {
+    transform: translateY(-110vh);
+    opacity: 0;
+  }
 }
 
 .container {
@@ -28,10 +44,11 @@ body, html {
   max-width: 450px;
   text-align: center;
   box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  position: relative;
+  transition: all 0.5s ease;
 }
 
-h1 { font-size: 2.3rem; margin-bottom: 10px; }
-p { margin: 10px 0; }
+h1 { font-size: 2.2rem; margin-bottom: 10px; }
 
 .buttons {
   display: flex;
@@ -39,37 +56,39 @@ p { margin: 10px 0; }
   gap: 15px;
   margin-top: 20px;
   min-height: 70px;
-  align-items: center;
 }
 
-button {
-  padding: 12px 28px;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  font-size: 1.1rem;
-  transition: transform 0.3s ease;
-  transform-origin: center;
-}
-
+/* Glowing YES Button */
 #yesBtn {
   background: white;
   color: #ff4d6d;
+  padding: 12px 28px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  animation: glow 2s infinite alternate;
+  transition: transform 0.3s ease;
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 10px #fff; }
+  to { box-shadow: 0 0 25px #ff4d6d; }
 }
 
 #noBtn {
   background: #ff4d6d;
   color: white;
+  padding: 12px 28px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
 #message {
   margin-top: 20px;
   min-height: 50px;
-  font-style: italic;
-}
-
-#finalMessage {
-  margin-top: 15px;
   font-style: italic;
 }
 
@@ -81,6 +100,12 @@ img {
   border-radius: 15px;
   display: none;
   box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* Romantic focus effect */
+.focused {
+  backdrop-filter: blur(20px);
+  transform: scale(1.03);
 }
 
 /* Confetti */
@@ -103,10 +128,9 @@ img {
 
 <body>
 
-<div class="container">
+<div class="container" id="container">
   <h1>Hey Sanika 🦋</h1>
-  <p>I made this little surprise just for you.<br>It comes straight from my heart.</p>
-  <p><strong>Will you be my Valentine?</strong> 💘</p>
+  <p>Will you be my Valentine? 💘</p>
 
   <div class="buttons">
     <button id="yesBtn">YES ❤️</button>
@@ -119,6 +143,18 @@ img {
 </div>
 
 <script>
+
+/* Floating Hearts Generator */
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "💖";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 8000);
+}, 800);
 
 const noMessages = [
   "Nice try 😌 you’re not escaping that easily.",
@@ -143,37 +179,45 @@ const yesBtn = document.getElementById("yesBtn");
 const msg = document.getElementById("message");
 const imageDisplay = document.getElementById("imageDisplay");
 const finalMsg = document.getElementById("finalMessage");
+const container = document.getElementById("container");
 
 let noScale = 1;
 let yesScale = 1;
 let clickCount = 0;
 let firstClickDone = false;
+const MIN_NO_SCALE = 0.4;
 
-const MIN_NO_SCALE = 0.4;  // 👈 prevents disappearing
+/* Typing Effect */
+function typeText(element, text, speed = 40) {
+  element.textContent = "";
+  let i = 0;
+  const interval = setInterval(() => {
+    element.textContent += text[i];
+    i++;
+    if (i >= text.length) clearInterval(interval);
+  }, speed);
+}
 
 function moveNoButton() {
   const padding = 20;
   const maxX = window.innerWidth - noBtn.offsetWidth - padding;
   const maxY = window.innerHeight - noBtn.offsetHeight - padding;
 
-  const randomX = Math.random() * maxX;
-  const randomY = Math.random() * maxY;
-
   noBtn.style.position = "fixed";
-  noBtn.style.left = randomX + "px";
-  noBtn.style.top = randomY + "px";
+  noBtn.style.left = Math.random() * maxX + "px";
+  noBtn.style.top = Math.random() * maxY + "px";
 }
 
 noBtn.addEventListener("click", () => {
 
-  msg.textContent = noMessages[clickCount % noMessages.length];
+  typeText(msg, noMessages[clickCount % noMessages.length]);
 
   imageDisplay.src = noImages[clickCount % noImages.length];
   imageDisplay.style.display = "block";
 
   if (firstClickDone) {
     if (noScale > MIN_NO_SCALE) {
-      noScale *= 0.85;  // 👈 slower shrink
+      noScale *= 0.85;
       noBtn.style.transform = `scale(${noScale})`;
     }
     moveNoButton();
@@ -191,8 +235,13 @@ yesBtn.addEventListener("click", () => {
   imageDisplay.src = yesImage;
   imageDisplay.style.display = "block";
 
-  finalMsg.textContent =
-    "YAY ❤️ Sanika, you just made me the happiest person ever 🦋";
+  container.classList.add("focused");
+
+  typeText(finalMsg,
+    "From the moment you came into my life, everything feels brighter.\n\n" +
+    "My Pakhru 🦋, I promise to choose you every single day.\n\n" +
+    "Thank you for choosing me ❤️"
+  , 35);
 
   document.querySelector(".buttons").style.display = "none";
   msg.style.display = "none";
